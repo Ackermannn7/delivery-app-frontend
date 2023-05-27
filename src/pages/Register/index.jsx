@@ -31,7 +31,6 @@ export const Register = () => {
     }
   };
 
-  console.log(imageUrl);
 
   const onClickRemoveImage = () => {
     setImageUrl("");
@@ -61,7 +60,6 @@ export const Register = () => {
         avatarUrl: `http://localhost:4444/${imageUrl}`,
       })
     );
-    console.log({ ...values, avatarUrl: `http://localhost:4444/${imageUrl}` });
     if (!data.payload) {
       return alert("Couldn't sign up");
     }

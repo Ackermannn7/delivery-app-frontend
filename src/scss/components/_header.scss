@@ -1,13 +1,13 @@
 @import "../variables";
 
 .header {
-  width: calc(100vw - 100px);
+  width: 100%;
   position: fixed;
   margin: 0 auto;
   top: 0;
   left: 0;
   background-color: $background;
-  padding: 10px 20px 50px 80px;
+  padding: 10px 20px 30px 80px;
   z-index: 999;
 
   .container {

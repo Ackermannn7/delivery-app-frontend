@@ -28,7 +28,6 @@ export const Login = () => {
 
   const onSubmit = async (values) => {
     const data = await dispatch(fetchLogin(values));
-    console.log(data);
     if (!data.payload) {
       return alert("Couldn't login");
     }

@@ -1,16 +1,19 @@
+import React from "react";
+
 import { Link } from "react-router-dom";
-import logo from "../assets/img/logo2.png";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectIsAuth } from "../redux/slices/authorization";
-export const Header = () => {
-  const isAuth = useSelector(selectIsAuth);
-  const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth.data);
+import { fetchShops } from "../redux/slices/shops";
 
-  console.log(userData);
+export const Header = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
+  const userData = useSelector((state) => state.auth.data);
+  const { shops } = useSelector((state) => state.shops);
+  const isShopLoading = shops.status === "loading";
 
   const onClickLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
@@ -18,30 +21,33 @@ export const Header = () => {
       window.localStorage.removeItem("token");
     }
   };
+
+  React.useEffect(() => {
+    dispatch(fetchShops());
+  }, []);
+
   return (
     <div className="header">
       <div className="container">
         <Link to="/">
           <div className="header__logo">
-            <img width="60" src={logo} alt="Pizza logo" />
             <div>
-              <h1>DOLLS FOR ALL</h1>
-              <p>Dolls for your house and soul</p>
+              <h1>DELIVERY</h1>
+              <p>We deliver anything, anywhere</p>
             </div>
           </div>
         </Link>
         <div className="categories">
           <ul>
-            <Link to="/dolls">
-              <li>Dolls</li>
-            </Link>
-            <Link to="/gallery">
-              <li>Gallery</li>
-            </Link>
-            <Link to="/aboutus">
-              <li>About us</li>
-            </Link>
-            <li>Language</li>
+            {(isShopLoading ? [...Array(3)] : shops.items).map((obj, index) =>
+              isShopLoading ? (
+                <li key={index}>
+                  <div></div>
+                </li>
+              ) : (
+                <li key={index}>{obj.shopName}</li>
+              )
+            )}
           </ul>
         </div>
         <div className="header__right-block">

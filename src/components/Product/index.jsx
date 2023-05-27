@@ -6,7 +6,6 @@ export const Product = (props) => {
     return <Skeleton />;
   }
 
-  console.log(props.description.length);
   return (
     <div className={styles.card}>
       <img

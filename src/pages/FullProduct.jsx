@@ -21,7 +21,7 @@ export const FullProduct = () => {
         alert("Error getting post!");
       });
   }, []);
-  console.log(data);
+
   if (isLoading) {
     return (
       <div
