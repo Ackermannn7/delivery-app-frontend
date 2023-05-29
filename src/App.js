@@ -9,6 +9,7 @@ import { Footer } from "./components/Footer";
 import { FullProduct } from "./pages/FullProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/authorization";
+import Cart from "./pages/Cart";
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products/:id" element={<FullProduct />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

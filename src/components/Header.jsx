@@ -6,25 +6,20 @@ import Button from "@mui/material/Button";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectIsAuth } from "../redux/slices/authorization";
-import { fetchShops } from "../redux/slices/shops";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
   const userData = useSelector((state) => state.auth.data);
-  const { shops } = useSelector((state) => state.shops);
-  const isShopLoading = shops.status === "loading";
 
+  const { items } = useSelector((state) => state.cart);
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
   const onClickLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       dispatch(logout());
       window.localStorage.removeItem("token");
     }
   };
-
-  React.useEffect(() => {
-    dispatch(fetchShops());
-  }, []);
 
   return (
     <div className="header">
@@ -37,22 +32,9 @@ export const Header = () => {
             </div>
           </div>
         </Link>
-        <div className="categories">
-          <ul>
-            {(isShopLoading ? [...Array(3)] : shops.items).map((obj, index) =>
-              isShopLoading ? (
-                <li key={index}>
-                  <div></div>
-                </li>
-              ) : (
-                <li key={index}>{obj.shopName}</li>
-              )
-            )}
-          </ul>
-        </div>
         <div className="header__right-block">
-          <div className="header__cart">
-            <a href="/cart.html" className="">
+          <Link to="/cart">
+            <div className="header__cart">
               <svg
                 width="32"
                 height="32"
@@ -82,8 +64,10 @@ export const Header = () => {
                   stroke-linejoin="round"
                 />
               </svg>
-            </a>
-          </div>
+              <span>{totalCount}</span>
+            </div>
+          </Link>
+
           {isAuth ? (
             <div className="auth-user">
               {userData.avatarUrl ? (

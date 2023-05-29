@@ -31,7 +31,6 @@ export const Register = () => {
     }
   };
 
-
   const onClickRemoveImage = () => {
     setImageUrl("");
   };
